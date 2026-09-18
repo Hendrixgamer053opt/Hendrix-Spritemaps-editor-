@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hendrix Spritemaps Editor</title>
+<title>Hendrix Spritemaps Editor - Creador de Spritemaps Online</title>
+<meta name="description" content="Hendrix Spritemaps Editor es una herramienta web para crear, editar y gestionar spritemaps fácilmente desde tu navegador.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -429,6 +430,19 @@
   .tutorial-card b{color:var(--maroon-dark);}
   @media(max-width:800px){
     .tutorial-grid{grid-template-columns:1fr;}
+  }
+
+  /* En telefono horizontal usamos la distribucion de PC. */
+  @media (orientation: landscape) and (max-width: 1100px){
+    body{padding:18px 20px 42px;}
+    .wrap{max-width:1280px;}
+    .layout{
+      grid-template-columns:minmax(190px, 0.8fr) minmax(260px, 1.5fr) minmax(190px, 0.8fr);
+      gap:16px;
+    }
+    .tutorial-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+    h1.title{font-size:clamp(28px,5vw,44px); margin-bottom:22px;}
+    .viewer{height:320px;}
   }
 
   /* ---------- PANTALLA DE CREDITO INICIAL ---------- */
