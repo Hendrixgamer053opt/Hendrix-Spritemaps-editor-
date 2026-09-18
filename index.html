@@ -1827,13 +1827,29 @@
     showMusicNotice();
     if(autoplay) musicAudio.play().catch(()=>{});
   }
+  musicAudio.volume = 0.7;
   musicAudio.addEventListener('ended',()=>setRandomMusic(true));
+  musicAudio.addEventListener('error',()=>{
+    console.warn('No se pudo cargar la musica:', musicAudio.src);
+  });
   setRandomMusic(false);
-  // El boton CONTINUAR del credito es una interaccion del usuario, asi que intentamos iniciar ahi.
-  const creditContinueBtn=document.getElementById('creditContinue');
-  if(creditContinueBtn) creditContinueBtn.addEventListener('click',()=>{
-    musicAudio.play().catch(()=>{});
-  },{once:false});
+
+  // Los navegadores bloquean audio automatico hasta que exista una interaccion.
+  // Cualquier toque/click en la pagina desbloquea la reproduccion.
+  let musicStarted = false;
+  async function startMusicFromGesture(){
+    if(musicStarted) return;
+    try{
+      await musicAudio.play();
+      musicStarted = true;
+      document.removeEventListener('pointerdown', startMusicFromGesture, true);
+      document.removeEventListener('keydown', startMusicFromGesture, true);
+    }catch(err){
+      console.warn('El navegador aun bloqueo el audio.', err);
+    }
+  }
+  document.addEventListener('pointerdown', startMusicFromGesture, true);
+  document.addEventListener('keydown', startMusicFromGesture, true);
 
   // ---------- init ----------
   renderAnimSelect();
