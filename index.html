@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hendrix Spritemaps Editor</title>
+<title>Hendrix Spritemaps Editor - Creador de Spritemaps Online</title>
+<meta name="description" content="Hendrix Spritemaps Editor es una herramienta web para crear, editar y gestionar spritemaps fácilmente desde tu navegador.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -431,26 +432,81 @@
     .tutorial-grid{grid-template-columns:1fr;}
   }
 
+  /* En telefono horizontal usamos la distribucion de PC. */
+  @media (orientation: landscape) and (max-width: 1100px){
+    body{padding:18px 20px 42px;}
+    .wrap{max-width:1280px;}
+    .layout{
+      grid-template-columns:minmax(190px, 0.8fr) minmax(260px, 1.5fr) minmax(190px, 0.8fr);
+      gap:16px;
+    }
+    .tutorial-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+    h1.title{font-size:clamp(28px,5vw,44px); margin-bottom:22px;}
+    .viewer{height:320px;}
+  }
 
-  /* --- musica de fondo --- */
-  .music-now-playing{position:fixed;top:12px;right:14px;z-index:9999;max-width:min(60vw,520px);padding:7px 12px;border:3px solid #FF3770;border-radius:10px;background:rgba(25,20,35,.92);box-shadow:3px 4px 0 rgba(0,0,0,.35);color:#fff;font-family:'Baloo 2',sans-serif;font-size:clamp(14px,2.6vw,22px);line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;pointer-events:none;transform:translateY(-8px);transition:opacity .25s ease,transform .25s ease}
-  .music-now-playing.show{opacity:1;transform:translateY(0)}
-  .music-now-label{opacity:.9;margin-right:5px}.music-now-title{color:#FF3770}
-  @media(max-width:520px){.music-now-playing{top:8px;right:8px;max-width:82vw;font-size:14px}}
+  /* ---------- PANTALLA DE CREDITO INICIAL ---------- */
+  .credit-screen{
+    position:fixed; inset:0; z-index:99999;
+    display:flex; align-items:center; justify-content:center;
+    padding:24px;
+    background:#241f30;
+    text-align:center;
+    opacity:1; visibility:visible;
+    transition:opacity .28s ease, visibility .28s ease;
+  }
+  .credit-screen.hidden{opacity:0; visibility:hidden; pointer-events:none;}
+  .credit-card{
+    width:min(520px, 100%);
+    padding:28px 22px 24px;
+    background:#9c8fae;
+    border:5px solid #443a53;
+    border-radius:18px;
+    box-shadow:8px 9px 0 rgba(15,10,20,.45);
+    color:#2a2333;
+  }
+  .credit-icon{
+    width:110px; height:110px; object-fit:cover;
+    border-radius:22px; display:block; margin:0 auto 18px;
+    border:4px solid #443a53;
+  }
+  .credit-title{
+    margin:0 0 12px; font-family:'VCR',cursive;
+    font-size:clamp(22px,6vw,34px); line-height:1.05;
+  }
+  .credit-text{
+    margin:0 auto 20px; max-width:440px;
+    font-size:15px; font-weight:700; line-height:1.5;
+  }
+  .credit-link{color:#FF3770; font-weight:900; text-decoration:underline;}
+  .credit-link:visited{color:#FF3770;}
+  .credit-continue{
+    border:4px solid #eee; border-radius:10px;
+    padding:11px 18px; cursor:pointer;
+    background:#6f6679; color:#fff;
+    font-family:'VCR',cursive; font-size:17px;
+    box-shadow:4px 5px 0 #514a58;
+  }
+  .credit-continue:active{transform:translateY(2px); box-shadow:2px 2px 0 #514a58;}
+  .standalone-mode .install-app-btn{display:none !important;}
+
 </style>
-<link rel="manifest" id="pwaManifest">
+<link rel="manifest" href="./manifest.json" id="pwaManifest">
 <meta name="theme-color" content="#0d0d0d">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
-<div class="music-now-playing" id="musicNowPlaying" aria-live="polite">
-  <span class="music-now-label">ESTAS ESCUCHANDO:</span>
-  <span class="music-now-title" id="musicMiniTitle">♫ ~ ...</span>
-</div>
-<audio id="musicAudio" preload="auto"></audio>
 
+<div class="credit-screen" id="creditScreen" role="dialog" aria-modal="true" aria-label="Credito del editor">
+  <div class="credit-card">
+    <img class="credit-icon" src="./icon-192.png" alt="Hendrix Spritemaps Editor">
+    <h2 class="credit-title">HENDRIX SPRITEMAPS EDITOR</h2>
+    <p class="credit-text">Esta pagina ha sido creada por <a class="credit-link" href="https://youtube.com/@hendrixfunker053?si=O2HE1ZsaogcuxT2V" target="_blank" rel="noopener noreferrer">Hendrix</a>.<br>Por favor, acredita su uso si se utiliza en tus proyectos.</p>
+    <button class="credit-continue" id="creditContinue">CONTINUAR</button>
+  </div>
+</div>
 
 <div class="wrap">
   <h1 class="title">HENDRIX SPRITEMAPS EDITOR</h1>
@@ -1734,36 +1790,24 @@
            (navigator.maxTouchPoints > 0 && window.innerWidth <= 920);
   }
 
-  // Manifest embebido: no necesita que el usuario cree otro archivo para
-  // que el editor pueda declarar su nombre, icono y modo de aplicacion.
-  // El aviso nativo sigue dependiendo del navegador y de estar en HTTPS.
-  (function setupPWA(){
-    const manifest = {
-      name: 'Hendrix Spritemaps Editor',
-      short_name: 'Spritemaps',
-      start_url: location.href.split('#')[0],
-      display: 'standalone',
-      background_color: '#0d0d0d',
-      theme_color: '#0d0d0d',
-      orientation: 'any',
-      icons: []
-    };
-    try {
-      const blob = new Blob([JSON.stringify(manifest)], {type:'application/manifest+json'});
-      const url = URL.createObjectURL(blob);
-      const link = document.getElementById('pwaManifest');
-      if (link) link.href = url;
-    } catch(e) {}
-  })();
 
-  if (isPhoneDevice()) {
+  function isStandaloneMode(){
+    return window.matchMedia('(display-mode: standalone)').matches ||
+           window.matchMedia('(display-mode: fullscreen)').matches ||
+           navigator.standalone === true;
+  }
+
+  if (isStandaloneMode()) {
+    document.body.classList.add('standalone-mode');
+    installAppBtn.style.display = 'none';
+  } else if (isPhoneDevice()) {
     installAppBtn.style.display = 'block';
   }
 
   window.addEventListener('beforeinstallprompt', event => {
     event.preventDefault();
     deferredInstallPrompt = event;
-    if (isPhoneDevice()) installAppBtn.style.display = 'block';
+    if (isPhoneDevice() && !isStandaloneMode()) installAppBtn.style.display = 'block';
   });
 
   installAppBtn.addEventListener('click', async () => {
@@ -1799,41 +1843,24 @@
     deferredInstallPrompt = null;
   });
 
-  // ---------- musica aleatoria ----------
-  const musicAudio = document.getElementById('musicAudio');
-  const musicNowPlaying = document.getElementById('musicNowPlaying');
-  const musicMiniTitle = document.getElementById('musicMiniTitle');
-  const MUSIC = [
-    {title:'♫ ~ Artistic Expression', src:'./15-artistic-expression.mp3'},
-    {title:'♫ ~ Funky shop!', src:'./funky-shop.ogg'},
-    {title:"♫ ~ Girlfriend's Song", src:'./14-girlfriends-song.mp3'}
-  ];
-  let currentMusicIndex=-1, musicNoticeTimer=null;
-  function showMusicNotice(){
-    musicNowPlaying.classList.add('show');
-    clearTimeout(musicNoticeTimer);
-    musicNoticeTimer=setTimeout(()=>musicNowPlaying.classList.remove('show'),10000);
+  // ---------- CREDITO INICIAL ----------
+  const creditScreen = document.getElementById('creditScreen');
+  const creditContinue = document.getElementById('creditContinue');
+  function closeCreditScreen(){
+    creditScreen.classList.add('hidden');
+    setTimeout(() => creditScreen.remove(), 320);
   }
-  function chooseRandomMusic(){
-    let n=Math.floor(Math.random()*MUSIC.length);
-    if(MUSIC.length>1) while(n===currentMusicIndex) n=Math.floor(Math.random()*MUSIC.length);
-    currentMusicIndex=n; return MUSIC[n];
+  creditContinue.addEventListener('click', closeCreditScreen);
+  creditScreen.addEventListener('click', event => {
+    if (event.target === creditScreen) closeCreditScreen();
+  });
+
+  // ---------- SERVICE WORKER ----------
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(err => console.warn('Service Worker:', err));
+    });
   }
-  function setRandomMusic(autoplay=false){
-    const item=chooseRandomMusic();
-    musicMiniTitle.textContent=item.title;
-    musicAudio.src=item.src;
-    musicAudio.load();
-    showMusicNotice();
-    if(autoplay) musicAudio.play().catch(()=>{});
-  }
-  musicAudio.addEventListener('ended',()=>setRandomMusic(true));
-  setRandomMusic(false);
-  // El boton CONTINUAR del credito es una interaccion del usuario, asi que intentamos iniciar ahi.
-  const creditContinueBtn=document.getElementById('creditContinue');
-  if(creditContinueBtn) creditContinueBtn.addEventListener('click',()=>{
-    musicAudio.play().catch(()=>{});
-  },{once:false});
 
   // ---------- init ----------
   renderAnimSelect();

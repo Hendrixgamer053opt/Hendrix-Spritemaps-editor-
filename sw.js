@@ -1,14 +1,10 @@
-const CACHE_NAME = 'hendrix-spritemaps-v8';
+const CACHE_NAME = 'hendrix-spritemaps-v2';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.json',
   './icon-192.png',
-  './icon-512.png',
-  './assets/the-field-of-hopes-and-dreams.otf',
-  './assets/music/14-girlfriends-song.mp3',
-  './assets/music/15-artistic-expression.mp3',
-  './assets/music/funky-shop.ogg'
+  './icon-512.png'
 ];
 
 self.addEventListener('install', event => {
