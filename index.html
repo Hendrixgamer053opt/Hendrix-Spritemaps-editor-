@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hendrix Spritemaps Editor</title>
+<title>Hendrix Spritemaps Editor - Creador de Spritemaps Online</title>
+<meta name="description" content="Hendrix Spritemaps Editor es una herramienta web para crear, editar y gestionar spritemaps fácilmente desde tu navegador.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -431,26 +432,124 @@
     .tutorial-grid{grid-template-columns:1fr;}
   }
 
+  /* En telefono horizontal usamos la distribucion de PC. */
+  @media (orientation: landscape) and (max-width: 1100px){
+    body{padding:18px 20px 42px;}
+    .wrap{max-width:1280px;}
+    .layout{
+      grid-template-columns:minmax(190px, 0.8fr) minmax(260px, 1.5fr) minmax(190px, 0.8fr);
+      gap:16px;
+    }
+    .tutorial-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+    h1.title{font-size:clamp(28px,5vw,44px); margin-bottom:22px;}
+    .viewer{height:320px;}
+  }
 
-  /* --- musica de fondo --- */
-  .music-now-playing{position:fixed;top:12px;right:14px;z-index:9999;max-width:min(60vw,520px);padding:7px 12px;border:3px solid #FF3770;border-radius:10px;background:rgba(25,20,35,.92);box-shadow:3px 4px 0 rgba(0,0,0,.35);color:#fff;font-family:'Baloo 2',sans-serif;font-size:clamp(14px,2.6vw,22px);line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;pointer-events:none;transform:translateY(-8px);transition:opacity .25s ease,transform .25s ease}
-  .music-now-playing.show{opacity:1;transform:translateY(0)}
-  .music-now-label{opacity:.9;margin-right:5px}.music-now-title{color:#FF3770}
-  @media(max-width:520px){.music-now-playing{top:8px;right:8px;max-width:82vw;font-size:14px}}
+  /* ---------- PANTALLA DE CREDITO INICIAL ---------- */
+  .credit-screen{
+    position:fixed; inset:0; z-index:99999;
+    display:flex; align-items:center; justify-content:center;
+    padding:24px;
+    background:#241f30;
+    text-align:center;
+    opacity:1; visibility:visible;
+    transition:opacity .28s ease, visibility .28s ease;
+  }
+  .credit-screen.hidden{opacity:0; visibility:hidden; pointer-events:none;}
+  .credit-card{
+    width:min(520px, 100%);
+    padding:28px 22px 24px;
+    background:#9c8fae;
+    border:5px solid #443a53;
+    border-radius:18px;
+    box-shadow:8px 9px 0 rgba(15,10,20,.45);
+    color:#2a2333;
+  }
+  .credit-icon{
+    width:110px; height:110px; object-fit:cover;
+    border-radius:22px; display:block; margin:0 auto 18px;
+    border:4px solid #443a53;
+  }
+  .credit-title{
+    margin:0 0 12px; font-family:'VCR',cursive;
+    font-size:clamp(22px,6vw,34px); line-height:1.05;
+  }
+  .credit-text{
+    margin:0 auto 20px; max-width:440px;
+    font-size:15px; font-weight:700; line-height:1.5;
+  }
+  .credit-link{color:#FF3770; font-weight:900; text-decoration:underline;}
+  .credit-link:visited{color:#FF3770;}
+  .credit-continue{
+    border:4px solid #eee; border-radius:10px;
+    padding:11px 18px; cursor:pointer;
+    background:#6f6679; color:#fff;
+    font-family:'VCR',cursive; font-size:17px;
+    box-shadow:4px 5px 0 #514a58;
+  }
+  .credit-continue:active{transform:translateY(2px); box-shadow:2px 2px 0 #514a58;}
+  .standalone-mode .install-app-btn{display:none !important;}
+
+  @font-face{
+    font-family: 'FieldFont';
+    src: url('./assets/the-field-of-hopes-and-dreams.otf') format('opentype');
+    font-display: swap;
+  }
+  .music-panel{margin:0;overflow:visible;}
+  .music-now-playing{
+    position:fixed;
+    top:12px;
+    right:14px;
+    z-index:9999;
+    max-width:min(52vw,430px);
+    padding:7px 12px;
+    border:3px solid #FF3770;
+    border-radius:10px;
+    background:rgba(25,20,35,.92);
+    box-shadow:3px 4px 0 rgba(0,0,0,.35);
+    color:#fff;
+    font-family:'FieldFont','Baloo 2',sans-serif;
+    font-size:clamp(14px,2.6vw,22px);
+    line-height:1.05;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(-8px);
+    transition:opacity .25s ease, transform .25s ease;
+  }
+  .music-now-playing.show{opacity:1;transform:translateY(0);}
+  .music-now-label{opacity:.9;margin-right:5px;}
+  .music-now-title{color:#FF3770;}
+  .music-mini-controls{display:flex;gap:8px;align-items:center;}
+  .music-play{
+    border:0;border-radius:8px;padding:8px 13px;cursor:pointer;
+    background:#FF3770;color:#fff;font-family:'VCR',sans-serif;
+    box-shadow:2px 2px 0 rgba(0,0,0,.35);
+  }
+  .music-play:active{transform:translateY(1px)}
+  .music-volume{width:90px;accent-color:#FF3770;}
+  @media(max-width:520px){.music-volume{width:70px}.music-now-playing{top:8px;right:8px;max-width:72vw;font-size:14px;}}
+  @media(orientation:landscape) and (min-width:700px){.music-now-playing{top:12px;right:18px;}}
+
 </style>
-<link rel="manifest" id="pwaManifest">
+<link rel="manifest" href="./manifest.json" id="pwaManifest">
 <meta name="theme-color" content="#0d0d0d">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
-<div class="music-now-playing" id="musicNowPlaying" aria-live="polite">
-  <span class="music-now-label">ESTAS ESCUCHANDO:</span>
-  <span class="music-now-title" id="musicMiniTitle">♫ ~ ...</span>
-</div>
-<audio id="musicAudio" preload="auto"></audio>
 
+<div class="credit-screen" id="creditScreen" role="dialog" aria-modal="true" aria-label="Credito del editor">
+  <div class="credit-card">
+    <img class="credit-icon" src="./icon-192.png" alt="Hendrix Spritemaps Editor">
+    <h2 class="credit-title">HENDRIX SPRITEMAPS EDITOR</h2>
+    <p class="credit-text">Esta pagina ha sido creada por <a class="credit-link" href="https://youtube.com/@hendrixfunker053?si=O2HE1ZsaogcuxT2V" target="_blank" rel="noopener noreferrer">Hendrix</a>.<br>Por favor, acredita su uso si se utiliza en tus proyectos.</p>
+    <button class="credit-continue" id="creditContinue">CONTINUAR</button>
+  </div>
+</div>
 
 <div class="wrap">
   <h1 class="title">HENDRIX SPRITEMAPS EDITOR</h1>
@@ -508,6 +607,18 @@
   <div class="layout">
     <!-- LEFT: viewer -->
     <div>
+      <div class="music-panel">
+        <div class="music-now-playing" id="musicNowPlaying" aria-live="polite">
+          <span class="music-now-label">ESTAS ESCUCHANDO:</span>
+          <span class="music-now-title" id="musicMiniTitle">♫ ~ ...</span>
+          <div class="music-mini-controls">
+            <button class="music-play" id="musicPlayBtn" type="button" title="Pausar/reproducir">⏸</button>
+            <input class="music-volume" id="musicVolume" type="range" min="0" max="1" step="0.01" value="0.6" title="Volumen">
+          </div>
+        </div>
+        <audio id="musicAudio" preload="metadata"></audio>
+      </div>
+
       <div class="col-label">VISUALIZADOR DE PERSONAJE</div>
       <div class="panel viewer" id="viewer">
         <canvas id="viewerCanvas" width="300" height="300"></canvas>
@@ -521,7 +632,7 @@
 
     <!-- MIDDLE: import + frames -->
     <div>
-      <button class="img-btn" id="openFolderBtn" title="Abrir un spritemap existente">
+<button class="img-btn" id="openFolderBtn" title="Abrir un spritemap existente">
         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAugAAABYCAYAAACnDwLMAAAgiElEQVR4nO3d/1Mbd5on8HdLMkKmEMiGsgW3g9HdJICTQCDjcYJ9sY1zE8eZfDWZWk+yu0mmUrXempqpyx9w+QeuKltbl6tN5TKZS+LdHew4ydphpmKM52I8Hk/AeBIL7N1pwWyQTEHcRhg3AkTfD0JYBvU3qVsS6P2qospGrdZHIKGnn8/zeT7CN998Ay3xeBxOp7N5YWHhTUEQ9mgeTESWUxTlbL7HQLkjCMIIgJE8D4NyyOFwnM33GCh3nE7nyPz8/Gi+x0G5pygKnE7no4uLi3uW/r9HEIQRh8Px8spjBQMB+l8DeM+OgRIRERERFQNFUQYFQWhZ+X2Hw7EHwG/v+p7OuZoVRXnTspERERERERWhdME5AMTj8TcEQUDql8PhcCD1S1GU5TsslbVU5mjcRERERERFZamEvDn1e1oZ9GbWnBMRERER2Ssej/88Ho8j+aUWoDcvLCyczeXAiIiIiIiKkaIoz6SWuLjSHPNoPB4/KwhCzgdnlbHwZL6HcJe52Dwmv43mexhERDk3PX0b09O3T+d7HERE+bK5qmL/rkfu0zxmqaT8aQCfAFgVoNfF4/GPzQTnn3f93twoiYioqGyEa3++x0BElC/fTk6dBqD7d1BRlGeQDNDj8fjyDfF4/D0uCiUiIiIissbGmLEkhaIoe7xeL4C7F4k+ykWhRERERES5JwjCNgAVAOBwOp1wOp2Ix+Nv5HVURERERERF7NatW3tu3bq1nEGvY/aciIiIiCh/FEVpURQFjvn5eczPzz+T7wERERERERUzRVH2KIoCh6IoyVWjRERERERkscnJKaOHbgOWatBZ3kJEREREZI/Y3Lyh4wRB2OZyueAA8Ki9QyIiIiIiIoOaHYuLiy35HgUREREREQGKolQ6AFTmeyBERERERAQsLi5ucyiKsiebk9x2L5y2aDxEREREROvO9LRs5vBtLrsGQkTFpWRLGQ4934HZ2Rj6B4YxOjia7yEREREVhOnp26aOd7GDCxFlS4GCl158AgDg8bixv2MHxPpa9J44n+eREVExUqBgW8s2iKEx+Cq98PnK4fdXIVBfC4/HrXlfWY4hEpmEdDMKSZpOfN2MrjrOObVg1/CJss+gl7hL9iO2aMVgiGiN2trgX/W9QKAW4Z334OqFa3kYEREVsycO70WNvzqj+3o8bgQCtQBqNY8LRybQ1/dHREdvZPQ4RGoURdnmyPYkVZu9VoyFiNaw+vr0H2S72psRcyk5Hg0RFbMDh/egxl8NSYpCFMcgimMIRyYgimOQpNWZ8EzV+KvReagDdS11lp2TKIk16ERpxCtc8FV60dbaAJ+vHD6f+oWoJEURjkwiGAwVVCYlXuFCjb8KpaWrp3Otrg/3pHmMpO/vvh+DvV9b+nhEROnUtdQtZ859Pq/m326rtLU2cM0NWS7rAL2mZjNuhm5aMBSiBG/dJvh85QikZGWTQbIkRZfrASORSVwfjkCAYNljx1wKHv9h+9L0pjHJD4HtTQEAiWnP48fOHNs45zhk2cCQCLiBRDDs91ctPXY5fJWJDyAzY77ir8KF7n4rh6eqqTHAAJ0yEq9w3fV3IEkMjbH+l1aJuRTs79iR88f1+bzw1m0qqAQNFZ5wePI0cO9+o8dnHaC7SzZkewoixFwKHn3soeUgV82djMjSh/bBRAZbDI3hUu9XWQXrOw+06T6+ETX+avz0pz86dK7vsqH665hLgatsw/JCptSAxEzQbYZWxtvyx/K4EXMpcC9YdyFF65e3bhPaWht0X/uyHENwSMTvv/hqXb+2FChYrNiQ9kJFy+xsDOPD120aVWF65oW9eXvsJw/uwi/e/mRdvxYpt7IO0KuqKqwYBxUpo4G5Fp/PizafF22tjbgSFPG77i9NB+rJmkUr7Wpvhs9XrpmpvnfnPdjV3mzp4xai6trNaza7lAyQrOSYmrd05metU6CgYee9aGtt0O2wkeTxuNHW2oi21kb0Dwytm1ma5KxBoL426wt0eV8MJ0+dW7PvPTNSS1vyweNx4/EftrNzFVmlxZIadMkhP+Zb9HxuxbmoeChQ8PJrTxv+QDZie1MA25sCON1z0XBN4L0777HtD/v2pgB8vnJ0Hz2b9va21gZbHldPcEgEkAgGOp/vWK7TlKQoTvf8wfQHejgyqRlM+Hzlay5IKNlSho6O79n22rgSFBEKjRVdljNVzKXg+7vvR1NjIKu/A22tjWhqDKDnzEVbfp4rZ7lKS92J9R2ekrSvD1k2HxgrUPDjI9b+PfR43Og81LGuLmDSUZCf0paVAoFanK5wsfyKsiYIQqUlAXrVporP45NzVpyKikTMpeCZF/Za+mGUykwf7pqlem671Pirca9Ku0G7nr+WcGRiOYh58uCuuxZR+XzejD7QZ2djlo8zn+pa6mz/wE9eTF6pF3O2HqBQJHtUW/kz9njcePLgboiNY5ZkMeMVLuzftwN+f5Xp92kyMDZT5vaXf/W4bX8P2lob13WAvu/Z9nwPYVnn8x2QpGnV28XQGGZnYwhHJgFwNo3UWROgb67A+OSEFaeiIvGXf/W47avrA4Fa+I88haNvfWrr4xixq725IPqBhyMTd2Xz1bLDba2N8Pur8NnRXkMfHpGlD5v1ov2R3JUdbW8KZBSgxytciS5DlXfeR/JsYoOVSGQSc+Mzps53u2Sx6+DBXZ3J89jVlaiupQ7tjzTbFowGArUoPbxHddZKTcyl4Dv/xY+mxoBlaz92tTfD4ylRDY5zWeIWXyeZ3ZUlZ75Kr21rdTKh1zkm3VjDkQkEgyF2glnnNsZchheIAhYF6DU1mzF+lQE6GbPzQFtOWl8BiUzWc6/8AMff/bVqoCmGxgwtSDv6v/8VULR7egcerMfefQ+lvW1Lw9ZV0+/hyERO6iZlOWZ6+r/GX40fH3na0MIneZ1l0PMxs2HUyrKklZLrOWQ5hr7zlw1/6Ff6yjtT3wfbmwKmz6EnFzMTQOK1+9wrP8A//d9f6752tzRsRfsjzbb9TVLrYqRAKYr1J2Ylu3j5/VVpF7Prtb1di2r81ajxV+NcqbsgEjlUGKzJoHOhKBlUsqVMd0GoLMcghsbwp+E/r7rtvpbvms6W+HxePP/K4/jo3d+kvd1I9tdoFl68FFIN0Ovra1cFyJHIpK0BerYBlsfjxsuv6Qfpepk5n68czA2lJ8vGL25KtpThpRefMHSsx+PG/o4dkB9pNlQP7U9T6pU8R7+v3JISiVyWQvl8Xrz82tOq7914hQsv/fgJ2y/G+geG034/3e67xSqxDki9pr9YBAI1DNBpmWUbFS14HXBFF606Ha1TTx7cpXm7KGrXj/aGJtCLRKZ658P3G/5w9fm8OKAy7W22FCBTabNBlfqZIEmKqn7Ia99v2pIShWSQrhfkac0GGHmexcro7zbmUnD4+Q7T5zdbD51OW2sjgsFQ1u+V68MRyPtiOZuh8HjcqGupS3uBGqivzck4/vjlVbjTzN5V5vg94ZiaBwq01rnGX1VQZSr5UuOvTjvTSsXJsgC91r8Z41GWuZC6xNSl+oeSmYWJ4qUQxEshzZKSlbT++ImifpmLHXy+ct1j+geG816bmAzyuo71qAbpkjStGqCny84WMlm2N4hMXnSZ6VWd7aJqvXpoPR0d3zNd172SAAEnT51D5yHzFxqZan+kOe37x851E6kbqqnNPGUymyCKY5BnY/jT8J9xO3obM98mLpha9t6HttZG1fvJcowLEdeIpsYAA3QCYGGAvq1+K+vQSVNTU73qbZIUzShwSAbqRvuYd+zbgQ+HP1n1YdU/MJynAF07iybLsbwH56m0NuOIRCZVy5fW2mZFfecv69ZKy3JsOcgTQ2PL30/t0AAACzPzWT9vq3o8Z5MJr/FXQ4FyXYCwNZsxREdv4HTPxZy1xfN43Gl3eZwbn8n6QiwcmYAohjG7tDhXno0ZXoipd3EuimO4+P8uLwfhWrSCc+Du1ycRrQ2WBeje8o1WnYrWKa3a80+Pnsnq3N1Hz+pmkYDEh/WDe+9fdTEwNfptVo+f5Cq1dkObX7z9Sdrp8XzRqknXCwLW0mZFo4OjeOvrERz52Qtpb9eaSQAA513/zv73Z2VXmUPPd+Af//GffOXxMsnsfRcrNmy1ohPI6OAo3hkcwWLFBrz2k2dVj0tmolcyezEdCNRgMM3vKzgk6maeI5FJhCOTmJ2NLWfF1X4GzrTfTU+r7Ouf3/vMUGAOJLLnegYyKJEjovyyLEAn0hKvUH+pyXIMC7PzWT/GYO/XiN6c0S15SddVQYCgXeYiCLodXADgO43/SfW2sMkp9dM9F23POEtS1HRHBLUgXS9wUwuSCpXWz97vr8rZxUbJljLLN6957L/9VymT1o6+Si+iU9Y8bwECnFMLmllsSZpOuyalV+Wcr77emfb7gfratDN0WsH5//mfXWm/byYIz5TR4BzQz55LUjRn62wyJd2MAmANOgCUekryPQSyUXT6tuGEtsPmsRABSHxAqrFy+lW8FMIv/9fHmsd4PO60FwzJ3TXTadmz3dDjtzx4j+ptN29GDZ0jaWRwxNTxmeg7fzmj+yWD9Jjr7ouWcES9zE3rNVCoRDH9a3O7RrmW1bRKwzK1vSmgedGcS1q14FaVnaW7CPXWbVI9Xut1XEgOH3lK95iu4z05GEl2tDb2KTbF3MWmGExP3zZ8LAN0yrt07RSzsTA7jytB9WAbSB8sXh+OqB6vl6UCElPNWtnokBhOn5JTkYtFXVrPWU+6IF0Uw6rH+3xeKNCfhSgkarMePp931cWJXexaYJtJ2Yxk8iLTCCt76GsF1isvSNpaG1SPnZXt3xlbKzFRXa8fpB04vEd3ZuVc3+U1sTnRetvojMgKhZFCoXVPK3s6MWL9H+cL3f2abdT8/qpViy8FCJqtAl2lG1RLcXYeaNOssZekKDbOOdLPv5uQDDJ8ld5Vi8yufT1iuiRG7znrWVnuovdBu7XBv6Y6FGg9nwceujcnPYu1fjd6nY+0Fk9nsoOpHcGe1uJiIBGsToSMZbTNBNZaFz52XIiY8dDD29EdOqt6u5FF8eHIxJrpqb3eNjojsgIz6JR/Bmq7M3Hhd1+p3pauJzmgvZhq94HvrfpedX01Dh95SjPAkOUYPvig21T2HMBytlmBAm/dJuw80IbXfvIsXvvJs+g81IH9HTvu+jrysxewpcF8gw2trHdy/FpSM+l65Ur1a6zMZWJMffGwVgbWKnozDnqdj/TaIpZsKTM7pJy7r+W7tpxXK/uci5ILrfeKavAtCDh85Cnd4FyWY/jVv5zyZTO+XFoLWX6iXGMGndat6Zu3TN/n+nAEOJj+tkCgFr2CAJfbhd0HvmeoPlaSovjgg+6uTLLnD+69H35/lans9pMHd6Pfb7yfPACEQmOaW45HIpPoHxjW7F2dDNLf//AzzcfKJGubT+4FQXURo8fjxoHDe1SztvJsbPlC0Mz25Mm69zMn+rBYkX1XIK0ZEr+/CqMGFxDaVZetd1EXCNSqLgq1S2mpG1satqK01J343VV6NXe5lOUY+geGLc1Yl20uu2uxqN4sXapjx3uQSZceKgzxChcvWogBOq1fmWTeBAianU1e/e+HDJ/rSlDEhe5+bERmpS1G6t617mc0SNfr8OD3V2Hg0jD8/irNQN7jcWu2zEtaax8+kcik6sWYHQu6ko/VtTgLH7IP0L/83RU89dye9I9VX2u4z34u6rKzpXXRHJPnulLfi1rdY7Re5+l4PG7sam9GIFBjeDMnvffA/Tsali9mDx95ynAnn9M9Fwu+a0s62ZTaEa1HLHGhdalsc5nmh7VWjemVYCjrxz956ou8ZorbWhtR11Jn+Hit7KjH48Z/3lSNqxeuoX9gKOuxrbVuLvna5KUmx7uv6pV12FWXbeRirWyzfimO3sLKlbNYdixMrPFXG+pLniRJ6j/TQH0tAg/W49XXOw0H5/0DQwW1sZkZa+ECkCiXGKDT+iMIePpH2luJa304Z7IFd1I4MoF/+Id/6SqEhZB6OxWm0gtWKuo2A0hk5bMtdVhrAXq+OkzY1b1FjV4Abmddtt46h+8+oN9q8rEDD6velu41a8cFhyiOmSov0/qZejxu3T0dUoUjExntxkxEhYkBOuWdkZZiRrlKN+Dw3/5QN+Ok1V4w04zp6Z6L6D561pJuLdmS5Rgu9aovkl1Jb6FoIFCz/O/uo2c1M396rOptnSuxcfNrGayQzYXiWqN3EaS16yag33Iw3evb6guOK0Ex7aZKWqycnenr+6Nl5yKi/GOATnlnVZeGwIP1+Ou/e0Y3OL8SFC3tMS7LMbz/wWcZTS1nE+hqOXnqnKnnqNWtBFid9T7+7q91s55aCmWTHCMECFk910yZ3XlWTe22LZacx85SH73nqnVRZ6SryaWBYdNdlIyS5Ri6jvVkVNJm5UVC56EOvPp6J5575QfYeaAN3rpNmHbOrJlOLla93onWi7XzKUlrmtZWzsnuKNm0WzTa4UCWY/hd95eWBeiiOGY6a5ZKkqY1u3uo7WSpRp6N4beff2m6H7re8cmNeZLHCRDwi7c/wcuvPZ3RNvQ1/iqMT+W/DMgoMTRmuIOGVW7fmvLpdeJ49fVO9J758q6ORakXvH5/lXY7wZQyD8dU+h7/uWB2l10gMfP22IGHdV9/Vu1BsJIsx9B3/nJWNd/XI5NdACwdm8/nhc/nTb5eJVmOQQyNIRQaK+g9CIppxojICAbolBP9A8OaXUkO/+0PcfStTzM693Ov/MBQCztZjiU21LEgOJflGI4d77G9W0ImwX+mz08UxzQzlffct+2uYMS9IODY8R4cer7DdJDu91cVdLCwUjAYylmALklRSNL0cps8ra5CAEzVKa9+rDsZ3FzsXKvGbPbU6HseAPrOX85kSKokKYrTPX9AdPRG1ufKRTmcx+PG9qZA4vV7MFGrPjAwjH//tz/pXgBSUVPLmOXvD0WRYYBOOeGcWkDXsR7VXtoejxuHjzxlKkgPPFhvODgJRybw2dFeQ8Hrwox2JlGWY/jwrU8sCWjCGi38gNy2JNQbS7qWfHPjMxll0vVqigvN1Kh2CRAAvPX3vzI9c2FE3/nLePLgbsvPK8uxVb9PrVZ3vkovolN3B6UKFGxr2YbSUje2N9WrBs2SFMXJU+dUL2iNdnLZ6N2o2jIyHVmOZX0hmJqBtiOo1bswtlqNvxo1B6sB7JYkKYr+geE12/mFbKUgEYwzIM8DRVHOMkCnnImO3tAN0l99vRPhyMSqlltmNnpZ6XTPRYwOjhoOqPWCLI/HjTkX4LYgbjayOG5lUGSEAkV1k5uFmfm0zzE4JGr2f1bbMCabTPpaIUDQ7dNcXbvZkqzqSuPD19HvH8q4L76a9z/8DM4V35Okac1NjaKjNxCvcCFQX4umpnrDfat9Pi9eevEJ9A+ob6Kl9/N9+kfmX1/ZZM/ffudEond6Spa7HNZnnLXK/4DEz0WSpm2ZwfH5vNjfsQPyI81Zl+tkK1/tTEkV1yjmGQN0yim9IB2wbvOXcGQCH/+q15as5gMP3WvJroFj3/yHD4Dqh77PV64Z9MUrXPCUutHUVA9fpddwJi5dttc5taC5eUvy8dJlO+fGZ/DhW5/gicN71+1mI8FgSPO5BQI1GLQhQAfubDplRZCu9b4IadTa72pvNr2Bz0pam2iJYljz52s2OA9HJrIKOFcG53YxslD0Qnc/LnT3o2RLGerra1Hjr7I06+7xuLG/YwfOlbot3Q2ViDLHAJ1yLjp6A+9/8JmtGdeTp77A+PB1S+rN06nxV+Eqsv8gK4+XSVqZw5XdUwL1tboL/4z4/u770wZJwSFRMwjUyugLENB99Czu3XmPbiBn16Y3drr29Qj2d+xQvb2pMWBrH+rB3q8RDIbw5MFdGc8mJTPYau+LP/+7evtRu+nN4Jh18tS5VTMEZrg9JZ2Ys7+8TC9znPq3YW58BlfHr+EqrqEXWA7YA4EaSy6Md7U3Izgk5mWn37W0uzBRLjBAp7zItHZZjyiO4cyJvqzrw/UyyVZuIjMwMLxUE7paIFBrS32qWg3477/4SjtA18noA8DVC9cQHBKxf98O1bEHLditNdfcC9plLh6PG966TbaUuSTNjc/go3d/Y+giKJUkRdF1vEc3CHIvCLqLUrORLDdLx8gMjlFXgvpBpl55Waadhrx1m+DzlWN2NmaoZv32rSnNWTRAe+bq6vi15ax3yZYytLY2oMZflfHvsK21gRseERUABuiUN+4FwbKyiNSuKlYs3ozoLJi08qLi+nAEOGjZ6bLiXhAsWbTmnFpA74nzOLO0iDBVJDJpe/cbu2hdTAH2lrmkunrhGr78wyXfffc36dZES9I0oqM3DGeT7ViUKsuxRM27TtDcPzCcdRZdkqKGepLLOm39SkuNvce1s9i7peRsnpryeJmkd2Fi9GJhbnxm+bnfLlnsamyq72xrbTAVrOdzAbdVF2hE6wEDdMqrZFmE0T7m6WgtPMuUGMpdZwUBAvoHrF8EqEUrODlzog/+I6tnNpLdLMyUDQgQ1lWHiPHh65D3qQcRdpe5pCqPl0l2/Gz1nqMZqV1CjLxurl64hrbWhowfW5Zj+OUvP/IZWcwZk+c0e5Cn61oEJLLZTY0Bw3Xg7Y804yOdTjJ6CYHKSi/GYS6bv3HO0Tk6OIrRwdGs/r7mkt7PgaiYMECngnChux+h0JipzJ3RrFwmRgZHAI16Y6vplZZYRZKiCEcmE5sZqcw0CBBw8tS5VQt5I5FJ1olCu04/F2UuuXDseA9eevGJjO/fPzAEUQxn9HPoOXMxowx+ODKB48fOdBltg7hxztGpVc5T6ilBvMKFGn/V8sLMTMpGjNxHLyGQ7ZqXC9398JS6DQW/ejMLdsrnYxMVEkEQBl2KoowIgrAt34MhGh++jrcjJ1YtjExndjbR3zibRWBaBGiXeli99btVpSVAIggXQ2OQpGmIoTE4puZXlf3oLZ6Njt7A2+/c/bsYGRzJ62Y2hWKw92s0NQZUs7zSzahtr8tcmRufwemei5qLYpNkOYZIZBLBIRFhCy7ixoevo0vugc9XDiBRE60V5MpyDP0Dw7h64Ro2wlzXFTE0hjaVc9f4q/HaT541c7qM5aLF4Keffu77+c//RvfiJZ/rQyKRyTWR6SfKgZsuACMAtuV3HEQJzqmFgimJOHOiL+o/8rQ3XSCmt8Asw8dD4PUXMrqvKI6hf2AYU6Pf3hVEJwLFzILqlb8LBud3qGV5JSm6bmYZRgdH8X5kEu2P3KkJl2cTwbgkTScuRFY8V6suTKKjN5az75EVY0gVHBKz2jwoGAzZPnMlivrBdy5eM+XxMunkqS80ZydkOYaxb/7DUImQHez4u7oW3b41lbffARUOlrgQqRAgeN955+OuF1880Lkyg2dHxkuAgHN9lw0vkhPFMQSHxLsWoDGIzg21zYNOnjqXpxHZY258Br0nzqe9LVezBFpjALLbPGhufMbWrjWyHMOpU+e6jGT2tWbQgkOiJeMZH76Ok/gCHft2rJoBEsUx9J44b8tmTEat1cXjVrN6t1pamxigE2nYOOfo/Ojd3yBeceetcvvWlOXbfSclWxTqSVe2Qrk12Ps1+geGl/+vtkMrFbbTPX/Q3DjNLFmOITgkon9gGM6pBcNlN8EhMW2ALstL7RotCpzHh6/j6PCnd/1NK6TXrp0XTGuBJK29PSLIHgzQiQxInYK2O8NkbLq7MD5Mi13q78rJ38maFB29gStBMeva5ytBEcFgaLk0x+wMw/XhSB8Oon3l948d77Elo1qor12tdQHFIBfrEajwORyOswzQiYioqF3o7ofPV256PwZZjqHnzEXNPudGCRDaUy8UZDmGX7z9ScFktnMlF+sCCpkohvM9BCoQDkEQBvM9CCIionw6dfTMT42WF1wJiug61oOjb31qSXCe1Hf+MoA7LWSLLTgH7qwLKEaSFF3zLVrJOsLo6Oj/APCGFSf7vOv3VpyGiIgoL+pa6jRvv/b1iK2Bc8mWsqJfLBmvcOWsxWUhSLYq/fW/9hXlRVkxeXBvA6qqKnSPczqdLSxxISIiWqLX5lVvD4FsFXtwDiTq49//4DP4/VXL30vuySCGxjAyOIKHDzwET2n2u90WgnBkElcvXLP9tUX5ZyQ4X3I52QediIiIqCDMjc9gNOViZeWeDBe6+/MxLKKM3XYvnAaw38ix8XgcDofDMWLvkIiIiIiIitfmqgpDwbmiKDcVRYHD6XSO2DwmIiIiIqKiVb9tq9FDBwHAAaAw9lUnIiIiIrpDyfcArFJbU6V/UArH3NwcFEU5a89wiIiIiIgysi5WznpqywwfKwjCoCAIcAiCAEEQPrZvWERERERExanhnr8wc/hNAHA4nU44nc6zNoyHiIiIiKiomWivCCx1V3Qs/eeyoiiDFo+HiIiIiEjNuqkxV/MXD9SYOt7hcIw4HA444vE44vE4BEF4z56hERERERGtCsjXRY25loZ7TZW3wOl0jjidTjjKy8ux9PWePUMjIiIioiKTLju+7gPyVGYWh6YYBe6UuADAFID3LBgPERERERW3ogrG03ng/oCp4xVFGZmbm8Pc3Bwcs7OzSH5t2LDhDXuGSERERERUHCSH/Ji3fKPZu40k/+FYccMogDezGxIRERERUfFq+O53Pjd7H0EQzi61P18VoGPDhg1vKopy05LREREREREVmW31WzO520jyH6sCdACjgiD83OwZx8KTmQyEiIiIiGjduO1eOJ1BecudFosOB1wqx/wSwB4Af2PkhLHYPP74VQhz7oXTpkdDRDm3Meban+8xEBERrUf12/yZfsb+NvkPIRwOr7p1fn4eAKAoyiVBEFoyfBAiIiKyAGepidaOqs0VcLs3mLrP0oahDyb/7yotLV11UMr39kSj0bMM0omIiPKntqYq30MgIhsJgjCY+v90Neipprxe756lqJ6IiIiIiKw3mPof4caNG0buVBGNRt8TBOEZO0ZERERERLTeKYpydumfN5ey5iMOh2OkrKxsEIlNQwHo1KCXl5cvfy8ajUIQhJ8pivKGIAiVdg2ciIiIiGg9UhRleYdVQUj80+FwoKysDDMzM8vHqXVxUfP3JSUlH8/Nzb0JoDL7YRIRERERUar/D8sYl4j61JZsAAAAAElFTkSuQmCC" alt="Open Folder">
       </button>
       <div class="btn-hint">Abre un pack V-Slice ya armado (carpeta con Animation.json + spritemap1.json + spritemap1.png) para verlo y seguir editando.</div>
@@ -691,6 +802,7 @@
     </div>
   </div>
 </div>
+
 
 <div class="toast" id="toast"></div>
 
@@ -1734,36 +1846,24 @@
            (navigator.maxTouchPoints > 0 && window.innerWidth <= 920);
   }
 
-  // Manifest embebido: no necesita que el usuario cree otro archivo para
-  // que el editor pueda declarar su nombre, icono y modo de aplicacion.
-  // El aviso nativo sigue dependiendo del navegador y de estar en HTTPS.
-  (function setupPWA(){
-    const manifest = {
-      name: 'Hendrix Spritemaps Editor',
-      short_name: 'Spritemaps',
-      start_url: location.href.split('#')[0],
-      display: 'standalone',
-      background_color: '#0d0d0d',
-      theme_color: '#0d0d0d',
-      orientation: 'any',
-      icons: []
-    };
-    try {
-      const blob = new Blob([JSON.stringify(manifest)], {type:'application/manifest+json'});
-      const url = URL.createObjectURL(blob);
-      const link = document.getElementById('pwaManifest');
-      if (link) link.href = url;
-    } catch(e) {}
-  })();
 
-  if (isPhoneDevice()) {
+  function isStandaloneMode(){
+    return window.matchMedia('(display-mode: standalone)').matches ||
+           window.matchMedia('(display-mode: fullscreen)').matches ||
+           navigator.standalone === true;
+  }
+
+  if (isStandaloneMode()) {
+    document.body.classList.add('standalone-mode');
+    installAppBtn.style.display = 'none';
+  } else if (isPhoneDevice()) {
     installAppBtn.style.display = 'block';
   }
 
   window.addEventListener('beforeinstallprompt', event => {
     event.preventDefault();
     deferredInstallPrompt = event;
-    if (isPhoneDevice()) installAppBtn.style.display = 'block';
+    if (isPhoneDevice() && !isStandaloneMode()) installAppBtn.style.display = 'block';
   });
 
   installAppBtn.addEventListener('click', async () => {
@@ -1799,57 +1899,93 @@
     deferredInstallPrompt = null;
   });
 
-  // ---------- musica aleatoria ----------
+  // ---------- CREDITO INICIAL ----------
+  const creditScreen = document.getElementById('creditScreen');
+  const creditContinue = document.getElementById('creditContinue');
+  function closeCreditScreen(){
+    creditScreen.classList.add('hidden');
+    setTimeout(() => creditScreen.remove(), 320);
+  }
+  creditContinue.addEventListener('click', closeCreditScreen);
+  creditScreen.addEventListener('click', event => {
+    if (event.target === creditScreen) closeCreditScreen();
+  });
+
+  // ---------- SERVICE WORKER ----------
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(err => console.warn('Service Worker:', err));
+    });
+  }
+  // ---------- mini music player ----------
   const musicAudio = document.getElementById('musicAudio');
-  const musicNowPlaying = document.getElementById('musicNowPlaying');
   const musicMiniTitle = document.getElementById('musicMiniTitle');
+  const musicPlayBtn = document.getElementById('musicPlayBtn');
+  const musicVolume = document.getElementById('musicVolume');
+  // las 3 pistas viven en assets/music/ (mismo lugar que precachea sw.js) - antes 2 de las 3
+  // apuntaban a la raiz por error y tiraban 404 en vez de sonar
   const MUSIC = [
-    {title:'♫ ~ Artistic Expression', src:'./15-artistic-expression.mp3'},
-    {title:'♫ ~ Funky shop!', src:'./funky-shop.ogg'},
-    {title:"♫ ~ Girlfriend's Song", src:'./14-girlfriends-song.mp3'}
+    { title: '♫ ~ Artistic Expression', src: './assets/music/15-artistic-expression.mp3' },
+    { title: '♫ ~ Funky shop!', src: './assets/music/funky-shop.ogg' },
+    { title: "♫ ~ Girlfriend's Song", src: './assets/music/14-girlfriends-song.mp3' }
   ];
-  let currentMusicIndex=-1, musicNoticeTimer=null;
+  musicAudio.volume = parseFloat(musicVolume.value);
+  // La cancion se elige al azar. El aviso solo aparece durante los primeros 10 segundos.
+  // Al terminar una cancion se elige otra al azar y el aviso vuelve a aparecer durante 10 segundos.
+  let currentMusicIndex = -1;
+  let musicNoticeTimer = null;
+  let autoplayBlocked = false;
   function showMusicNotice(){
     musicNowPlaying.classList.add('show');
     clearTimeout(musicNoticeTimer);
-    musicNoticeTimer=setTimeout(()=>musicNowPlaying.classList.remove('show'),10000);
+    musicNoticeTimer = setTimeout(() => musicNowPlaying.classList.remove('show'), 10000);
   }
   function chooseRandomMusic(){
-    let n=Math.floor(Math.random()*MUSIC.length);
-    if(MUSIC.length>1) while(n===currentMusicIndex) n=Math.floor(Math.random()*MUSIC.length);
-    currentMusicIndex=n; return MUSIC[n];
+    let next = Math.floor(Math.random() * MUSIC.length);
+    if (MUSIC.length > 1) {
+      while (next === currentMusicIndex) next = Math.floor(Math.random() * MUSIC.length);
+    }
+    currentMusicIndex = next;
+    return MUSIC[next];
   }
-  function setRandomMusic(autoplay=false){
-    const item=chooseRandomMusic();
-    musicMiniTitle.textContent=item.title;
-    musicAudio.src=item.src;
+  function updatePlayBtn(){
+    musicPlayBtn.textContent = musicAudio.paused ? '▶' : '⏸';
+  }
+  function setRandomMusic(){
+    const item = chooseRandomMusic();
+    musicMiniTitle.textContent = item.title;
+    musicAudio.src = item.src;
     musicAudio.load();
     showMusicNotice();
-    if(autoplay) musicAudio.play().catch(()=>{});
+    // El navegador puede bloquear el autoplay con sonido hasta que haya una interaccion del usuario.
+    // Si lo bloquea, dejamos un listener para arrancar apenas toque/haga click en cualquier lado.
+    musicAudio.play().then(() => { autoplayBlocked = false; updatePlayBtn(); }).catch(() => {
+      autoplayBlocked = true;
+      updatePlayBtn();
+    });
   }
-  musicAudio.volume = 0.7;
-  musicAudio.addEventListener('ended',()=>setRandomMusic(true));
-  musicAudio.addEventListener('error',()=>{
-    console.warn('No se pudo cargar la musica:', musicAudio.src);
-  });
-  setRandomMusic(false);
+  function tryResumeOnInteraction(){
+    if (!autoplayBlocked) return;
+    musicAudio.play().then(() => { autoplayBlocked = false; updatePlayBtn(); }).catch(()=>{});
+  }
+  document.addEventListener('pointerdown', tryResumeOnInteraction);
+  document.addEventListener('keydown', tryResumeOnInteraction);
 
-  // Los navegadores bloquean audio automatico hasta que exista una interaccion.
-  // Cualquier toque/click en la pagina desbloquea la reproduccion.
-  let musicStarted = false;
-  async function startMusicFromGesture(){
-    if(musicStarted) return;
-    try{
-      await musicAudio.play();
-      musicStarted = true;
-      document.removeEventListener('pointerdown', startMusicFromGesture, true);
-      document.removeEventListener('keydown', startMusicFromGesture, true);
-    }catch(err){
-      console.warn('El navegador aun bloqueo el audio.', err);
+  musicPlayBtn.addEventListener('click', () => {
+    if (musicAudio.paused){
+      autoplayBlocked = false;
+      musicAudio.play().catch(()=>{});
+    } else {
+      musicAudio.pause();
     }
-  }
-  document.addEventListener('pointerdown', startMusicFromGesture, true);
-  document.addEventListener('keydown', startMusicFromGesture, true);
+    updatePlayBtn();
+  });
+  musicVolume.addEventListener('input', () => { musicAudio.volume = parseFloat(musicVolume.value); });
+  musicAudio.addEventListener('play', updatePlayBtn);
+  musicAudio.addEventListener('pause', updatePlayBtn);
+  musicAudio.addEventListener('ended', setRandomMusic);
+  musicAudio.addEventListener('error', () => { showMusicNotice(); musicMiniTitle.textContent = '♫ ~ (no pude cargar esta, paso a otra)'; setTimeout(setRandomMusic, 800); });
+  setRandomMusic();
 
   // ---------- init ----------
   renderAnimSelect();
